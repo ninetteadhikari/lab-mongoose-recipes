@@ -18,29 +18,25 @@ mongoose
     console.error("Error connecting to mongo", err);
   });
 
-// Recipe.create({data})
-
-// Recipe.findOne({
-//   title: "Carrot Cake"
-// }).then(data => {
-//   console.log(data)
-// });
-
 Recipe.create({ title: "NewCurry", cuisine: "Indian" }).then(data => {
   console.log(data.title);
 });
 
 Recipe.insertMany(data).then(data => {
-  console.log(data.title);
+  data.forEach(value => {
+    console.log(value.title)
+     })
+    
 });
 
 Recipe.updateOne(
-  { name: "Rigatoni alla Genovese" },
+  { name: "Rigatoni alla Genovese", duration: 220 },
   { name: "Rigatoni alla Genovese", duration: 100 }
 ).then(data => {
   console.log("Recipe successfully updated");
 });
 
-Recipe.deleteOne({title:"Carrot Cake"}).then(data=>{
-  console.log("Recipe successfully deleted")
-})
+Recipe.deleteOne({ title: "Carrot Cake" }).then(data => {
+  console.log("Recipe successfully deleted");
+  mongoose.connection.close();
+});
